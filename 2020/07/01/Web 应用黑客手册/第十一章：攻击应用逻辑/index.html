@@ -15,7 +15,7 @@
 <meta property="og:description" content="攻击应用逻辑逻辑缺陷的本质逻辑缺陷的本质是：开发人员做了错误的的假设。或者说，他们算漏了，有 corner case 没有考虑到。 现实中的逻辑缺陷求助神谕功能为了实现 remember me 功能，设置了 cookie。同时，还实现了一个功能：当用户打开网页的时候，显示“亲爱的 XXX，好久不见”类似的标语。开发人员把 XXX 对应的信息存在 cookie 的 ScreenName 中。 假设开">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-01T14:14:26.480Z">
-<meta property="article:modified_time" content="2020-07-06T14:28:23.369Z">
+<meta property="article:modified_time" content="2020-07-07T15:20:11.878Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -162,7 +162,40 @@
 
 <p>开发人员假设这个代码没问题。</p>
 <h6 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h6><p>可以传入一个负数。</p>
-<h5 id="折扣欺诈"><a href="#折扣欺诈" class="headerlink" title="折扣欺诈"></a>折扣欺诈</h5><h6 id="功能-6"><a href="#功能-6" class="headerlink" title="功能"></a>功能</h6>
+<h5 id="折扣欺诈"><a href="#折扣欺诈" class="headerlink" title="折扣欺诈"></a>折扣欺诈</h5><h6 id="功能-6"><a href="#功能-6" class="headerlink" title="功能"></a>功能</h6><p>应用程序允许用户购买软件产品，并且，如果购买合适的捆绑项目，就可以获得折扣。</p>
+<h6 id="假设-6"><a href="#假设-6" class="headerlink" title="假设"></a>假设</h6><p>当用户把一个软件添加到购物车时，应用会根据规则来决定当前选择的产品是否有权享受折扣。如果满足规则，购物车内的产品价格会根据折扣进行调整。开发者假设用户将继续购买选中的捆绑项目，因此有权享受折扣。</p>
+<h6 id="攻击-6"><a href="#攻击-6" class="headerlink" title="攻击"></a>攻击</h6><p>开发者的假设是错误的，因为用户可以从购物车移除商品。假如移除商品后，价格没响应改变，就出问题了。</p>
+<h5 id="对转义字符进行转义操作"><a href="#对转义字符进行转义操作" class="headerlink" title="对转义字符进行转义操作"></a>对转义字符进行转义操作</h5><h6 id="功能-7"><a href="#功能-7" class="headerlink" title="功能"></a>功能</h6><p>为了防止操作系统命令注入，开发者决定对以下字符进行转义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">; | &amp; &lt; &gt; ‘ space and newline</span><br></pre></td></tr></table></figure>
+
+<h6 id="假设-7"><a href="#假设-7" class="headerlink" title="假设"></a>假设</h6><p>开发者觉得这样就万无一失了。</p>
+<h6 id="攻击-7"><a href="#攻击-7" class="headerlink" title="攻击"></a>攻击</h6><p>输入前</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo\;ls</span><br></pre></td></tr></table></figure>
+
+<p>转义后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo\\;ls</span><br></pre></td></tr></table></figure>
+
+<p>防御失败。</p>
+<h5 id="使输入验证无效"><a href="#使输入验证无效" class="headerlink" title="使输入验证无效"></a>使输入验证无效</h5><h6 id="功能-8"><a href="#功能-8" class="headerlink" title="功能"></a>功能</h6><p>防 SQL 注入功能：把每个单引号前加一个单引号，就可以对单引号进行转义</p>
+<p>长度限制：输入不能超过 128 个字符，之后的字符进行截断</p>
+<h6 id="假设-8"><a href="#假设-8" class="headerlink" title="假设"></a>假设</h6><p>假设没问题</p>
+<h6 id="攻击-8"><a href="#攻击-8" class="headerlink" title="攻击"></a>攻击</h6><p>输入 127个 a 加一个 单引号，该单引号就先转义，后被截断</p>
+<p>输入密码解决引号不匹配问题</p>
+<p>不进行迭代的过滤器都是有问题的！</p>
+<h5 id="滥用搜索功能"><a href="#滥用搜索功能" class="headerlink" title="滥用搜索功能"></a>滥用搜索功能</h5><h6 id="功能-9"><a href="#功能-9" class="headerlink" title="功能"></a>功能</h6><p>应用提供了大量信息，其中某些信息仅限于付费用户。同时，该应用还提供了搜索功能，所有用户都可以使用。搜索结果包含付费文档的链接。</p>
+<h6 id="假设-9"><a href="#假设-9" class="headerlink" title="假设"></a>假设</h6><p>应用假设用户仅通过搜索结果不能访问付费信息。</p>
+<h6 id="攻击-9"><a href="#攻击-9" class="headerlink" title="攻击"></a>攻击</h6><p>因为搜索会返回匹配的数量，可以使用如下方法来探测付费文档的信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">wahh consulting</span><br><span class="line">&gt;&gt; 276 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; merger</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; share issue</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; dividend</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover</span><br><span class="line">&gt;&gt; 1 match</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover haxors inc</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover uberleet ltd</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover script kiddy corp</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover ngs</span><br><span class="line">&gt;&gt; 1 match</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover ngs announced</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover ngs cancelled</span><br><span class="line">&gt;&gt; 0 matches</span><br><span class="line">wahh consulting &quot;Press Release 08-03-2011&quot; takeover ngs completed</span><br><span class="line">&gt;&gt; 1 match</span><br></pre></td></tr></table></figure>
+
+<p>假如密码明文存储了，此时就可以枚举到密码了。</p>
+<h5 id="捕捉调试信息"><a href="#捕捉调试信息" class="headerlink" title="捕捉调试信息"></a>捕捉调试信息</h5><h6 id="功能-10"><a href="#功能-10" class="headerlink" title="功能"></a>功能</h6><p>应用上线不久，还有很多功能性 bug，因此，程序员增加了调试信息。</p>
+<h6 id="假设-10"><a href="#假设-10" class="headerlink" title="假设"></a>假设</h6><p>程序员假设用户看到调试信息也不会有安全问题。</p>
+<h6 id="攻击-10"><a href="#攻击-10" class="headerlink" title="攻击"></a>攻击</h6><p>存放调试信息的网页是静态的，是会话无关的。由于实现的不安全，用户偶尔会看到其他用户的调试信息。</p>
+<p>攻击者可以多次尝试制造错误，收集其他用户的信息。</p>
+<h5 id="Racing-Against-the-Login"><a href="#Racing-Against-the-Login" class="headerlink" title="Racing Against the Login"></a>Racing Against the Login</h5><h6 id="功能-11"><a href="#功能-11" class="headerlink" title="功能"></a>功能</h6><p>多阶段登录功能。</p>
+<h6 id="假设-11"><a href="#假设-11" class="headerlink" title="假设"></a>假设</h6><p>认为没问题了。</p>
+<h6 id="攻击-11"><a href="#攻击-11" class="headerlink" title="攻击"></a>攻击</h6><p>线程不安全，假设多个用户同时登录，可能会对不上号。</p>
+<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4>
       
     </div>
     <footer class="article-footer">
