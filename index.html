@@ -64,6 +64,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web 应用黑客手册/第十二章：攻击用户：跨站脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/09/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E7%94%A8%E6%88%B7%EF%BC%9A%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC/" class="article-date">
+  <time datetime="2020-07-09T11:51:07.184Z" itemprop="datePublished">2020-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/09/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E7%94%A8%E6%88%B7%EF%BC%9A%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC/">Web 应用黑客手册/第十二章：攻击用户：跨站脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="攻击用户：跨站脚本"><a href="#攻击用户：跨站脚本" class="headerlink" title="攻击用户：跨站脚本"></a>攻击用户：跨站脚本</h3><h4 id="XSS-分类"><a href="#XSS-分类" class="headerlink" title="XSS 分类"></a>XSS 分类</h4><p>XSS 分为：反射型，存储型和 DOM 型。</p>
+<h5 id="反射型-XSS"><a href="#反射型-XSS" class="headerlink" title="反射型 XSS"></a>反射型 XSS</h5><p>直接把用户的输入插入 HTML 文档</p>
+<ol>
+<li>用户登录</li>
+<li>攻击者发送伪造的 URL 给用户</li>
+<li>用户点击伪造的 URL</li>
+<li>服务端返回带有攻击者 JavaScript 代码的响应报文</li>
+<li>攻击者的脚本在用户浏览器执行</li>
+<li>攻击者的脚本发送会话令牌给攻击者</li>
+<li>攻击者得到会话令牌</li>
+</ol>
+<h5 id="存储型-XSS"><a href="#存储型-XSS" class="headerlink" title="存储型 XSS"></a>存储型 XSS</h5><ol>
+<li>攻击者发送恶意信息到服务端</li>
+<li>用户登录</li>
+<li>用户查看攻击者的信息</li>
+<li>服务端返回带有攻击者 JavaScript 代码的响应报文</li>
+<li>攻击者的脚本在用户浏览器执行</li>
+<li>攻击者的脚本发送会话令牌给攻击者</li>
+<li>攻击者得到会话令牌</li>
+</ol>
+<p>攻击者需要诱导用户才能利用反射型 XSS 漏洞，但是，对于存储型 XSS，不需要这么麻烦。</p>
+<h5 id="DOM-型-XSS"><a href="#DOM-型-XSS" class="headerlink" title="DOM 型 XSS"></a>DOM 型 XSS</h5><ol>
+<li>用户登录</li>
+<li>攻击者发送伪造的 URL 给用户</li>
+<li>用户点击伪造的 URL</li>
+<li>服务端返回包含 JavaScript 硬编码的脚本</li>
+<li>浏览器处理返回的 HTML 文档，出发攻击者的脚本</li>
+<li>攻击者的脚本发送会话令牌给攻击者</li>
+<li>攻击者得到会话令牌</li>
+</ol>
+<h4 id="寻找-XSS-漏洞"><a href="#寻找-XSS-漏洞" class="headerlink" title="寻找 XSS 漏洞"></a>寻找 XSS 漏洞</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/09/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E7%94%A8%E6%88%B7%EF%BC%9A%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC/" data-id="ckcexwdlc0000isfebnzxa4gf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Web 应用黑客手册/第十一章：攻击应用逻辑" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/01/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91/" class="article-date">
@@ -907,113 +973,29 @@ filestore/../../../../../../../etc/passwd
 </ul>
 <h6 id="Java-平台"><a href="#Java-平台" class="headerlink" title="Java 平台"></a>Java 平台</h6><h6 id="ASP-NET"><a href="#ASP-NET" class="headerlink" title="ASP.NET"></a>ASP.NET</h6><h6 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h6><h6 id="Ruby-on-Rails"><a href="#Ruby-on-Rails" class="headerlink" title="Ruby on Rails"></a>Ruby on Rails</h6><h6 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h6><h6 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h6><h5 id="客户端功能"><a href="#客户端功能" class="headerlink" title="客户端功能"></a>客户端功能</h5><h6 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h6><h6 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h6><h6 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h6><h6 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h6><h6 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h6><h6 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h6><h6 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h6><h6 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h6><h6 id="Web2-0"><a href="#Web2-0" class="headerlink" title="Web2.0"></a>Web2.0</h6><h6 id="浏览器扩展技术"><a href="#浏览器扩展技术" class="headerlink" title="浏览器扩展技术"></a>浏览器扩展技术</h6><h5 id="状态和会话"><a href="#状态和会话" class="headerlink" title="状态和会话"></a>状态和会话</h5><p>主要通过 cookie</p>
 <h4 id="编码方案"><a href="#编码方案" class="headerlink" title="编码方案"></a>编码方案</h4><h5 id="URL-编码"><a href="#URL-编码" class="headerlink" title="URL 编码"></a>URL 编码</h5><h5 id="Unicode-编码"><a href="#Unicode-编码" class="headerlink" title="Unicode 编码"></a>Unicode 编码</h5><h5 id="HTML-编码"><a href="#HTML-编码" class="headerlink" title="HTML 编码"></a>HTML 编码</h5><h5 id="Base64-编码"><a href="#Base64-编码" class="headerlink" title="Base64 编码"></a>Base64 编码</h5><h5 id="Hex-编码"><a href="#Hex-编码" class="headerlink" title="Hex 编码"></a>Hex 编码</h5><h4 id="远程处理和序列化框架"><a href="#远程处理和序列化框架" class="headerlink" title="远程处理和序列化框架"></a>远程处理和序列化框架</h4><p>fastjson，哈哈哈哈哈哈</p>
-<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4>
+<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4><p>第一题</p>
+<p>OPTIONS 方法有什么用？</p>
+<p>获取服务端支持的请求方法</p>
+<p>第二题</p>
+<p>If-Modified-Since 和 If-None-Match 有什么用？为什么攻击时对此感兴趣？</p>
+<p>If-Modified-Since：只有当请求的资源自从某个时间之后有改变才会返回该资源</p>
+<p> If-None-Match：只有服务器没有匹配的 etag，服务端才会返回请求的资源</p>
+<p>缓存中毒</p>
+<p>第三题</p>
+<p>服务端设置 cookie secure 标识有什么意义？</p>
+<p>cookie 只能在 HTTPS 进行传输</p>
+<p>第四题</p>
+<p>301 和 302 有什么区别？</p>
+<p>301 永久移除</p>
+<p>302 短暂移除</p>
+<p>第五题</p>
+<p>使用 SSL 的时候，浏览器怎么和 HTTP proxy 交互？</p>
+<p>HTTP CONNECT，proxy 仅作为 TCP 连接的中间节点</p>
+
       
     </div>
     <footer class="article-footer">
       <a data-url="http://yoursite.com/2020/06/21/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9AWeb%20%E5%BA%94%E7%94%A8%E6%8A%80%E6%9C%AF/" data-id="ckbxqp6ep0002rsfee97nbby1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Web 应用黑客手册/第二章：核心防御机制" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/06/20/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%A0%B8%E5%BF%83%E9%98%B2%E5%BE%A1%E6%9C%BA%E5%88%B6/" class="article-date">
-  <time datetime="2020-06-20T11:59:44.507Z" itemprop="datePublished">2020-06-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/20/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%A0%B8%E5%BF%83%E9%98%B2%E5%BE%A1%E6%9C%BA%E5%88%B6/">Web 应用黑客手册/第二章：核心防御机制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="核心防御机制"><a href="#核心防御机制" class="headerlink" title="核心防御机制"></a>核心防御机制</h3><h4 id="处理用户访问"><a href="#处理用户访问" class="headerlink" title="处理用户访问"></a>处理用户访问</h4><p>Web 应用需要满足的核心安全需要是，控制用户对应用数据和功能的访问。一般起码可以把用户分为三类：匿名用户，普通用户，管理员用户。除此之外，普通用户之间也有权限区别，比如，A 不能查看 B 的邮件。</p>
-<p>大部分 Web 应用通过以下三种相关联的安全机制处理访问：</p>
-<ul>
-<li>身份认证</li>
-<li>会话管理</li>
-<li>访问控制</li>
-</ul>
-<p>每个机制都是一个攻击面，且都是整体安全性的基础。因为它们的互相依赖性，总体的安全性取决于最薄弱的一个环节。任何一个环节的缺陷都可能导致骇客不受限制地访问应用。</p>
-<h5 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h5><p>身份认证是应用处理用户访问最基础的依赖项。身份认证机制需要确认用户就是他所声称的那个人。如果无法鉴别用户，那么应用就只能把所有用户当作匿名用户，给他们最低级别的访问权限。</p>
-<p>大部分 Web 应用都采用用户名加密码的机制来进行身份认证。在安全性要求更高的领域，还有其他机制来辅助，比如客户端证书，智能卡，挑战响应令牌等。除了核心登录功能，授权机制通常还包括其他辅助功能：自注册，账号恢复，密码修改等。</p>
-<p>尽管认证机制看起来很简单，但是，通常会在涉及和实现中存在缺陷。常见的问题可能使得骇客可以识别其他用户用户名，猜测密码，绕过登录环节。</p>
-<h5 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h5><p>用户登录成功后，就可以访问应用。为了进行访问控制，应用需要一种方式来区分不同的用户。</p>
-<p>实际上，所有的 Web 应用都通过为每个用户创建一个会话，并为用户发布一个标识该会话的令牌来满足这一要求。会话是应用用于保存用户与应用当前交互状态的数据结构，令牌是用于映射该会话的唯一字符串。浏览器收到服务器发来的令牌后，会在之后的 HTTP 请求中附加该令牌。HTTP cookies 是令牌的标准实现。有的应用也会用隐藏表单或者 URL 参数来实现令牌。如果一个用户在一段时间内没有访问应用，那么令牌就会失效。（会话和令牌是逻辑层概念，cookie，表单或者 URL参数是实现的位置，具体的数据结构，都是字符串。——本人注）</p>
-<p>在攻击面方面，会话管理高度依赖令牌的安全。针对会话管理的大多数攻击都试图窃取发给其他用户的令牌。如果成功的话，骇客就可以伪装成其他用户来访问应用。漏洞主要包括令牌生成缺陷，攻击者如果能猜测其他用户的令牌就可以伪装其他用户；令牌处理缺陷，攻击者可以窃取其他用户的令牌。</p>
-<p>少数应用采用其他方式在多个 HTTP 交互中识别用户，不需要使用令牌。如果使用 HTTP 默认的身份认证机制，浏览器会在在每次请求时自动提交令牌。应用也可以把状态信息存储在客户端，通常都会加密。</p>
-<h5 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h5><p>处理用户访问的最后一步就是判断用户的请求是否可以接受。在这一步，需要确定用户是否有权限执行某个操作，或者访问某些数据。</p>
-<p>访问控制需要实现细粒度的逻辑。应用可能支持多种用户，每种用户的都有不同的权限。</p>
-<p>因为典型访问控制的复杂性，这是安全漏洞的常见来源，攻击者可以获得对数据的未授权访问。开发人员经常对用户和应用的交互方式做出错误的假设，并且经常忽略某些功能的访问控制检查，从而导致未授权访问。探测这种漏洞通常很困难，因为基本上要对每个功能项重复相同的检查。然而，由于访问控制缺陷的普遍存在，这些工作通常是值得的。</p>
-<h4 id="处理用户输入"><a href="#处理用户输入" class="headerlink" title="处理用户输入"></a>处理用户输入</h4><p>所有用户输入都是不可信的。大量安全漏洞都来自于对用户提交的意外输入。因此，Web 安全要求开发者用合适的方式处理用户输入。</p>
-<h5 id="输入的种类"><a href="#输入的种类" class="headerlink" title="输入的种类"></a>输入的种类</h5><p>任何输入都是可能的</p>
-<h5 id="处理输入的方法"><a href="#处理输入的方法" class="headerlink" title="处理输入的方法"></a>处理输入的方法</h5><h6 id="拒绝已知的恶意输入"><a href="#拒绝已知的恶意输入" class="headerlink" title="拒绝已知的恶意输入"></a>拒绝已知的恶意输入</h6><p>比如，黑名单</p>
-<p>这种方法效果最差，因为利用技术在不断发展，黑名单总是慢一步。黑名单技术容易收到空字节攻击。</p>
-<h6 id="接受已知的合法输入"><a href="#接受已知的合法输入" class="headerlink" title="接受已知的合法输入"></a>接受已知的合法输入</h6><p>白名单。但是，在很多场景下，很难定义什么是合法的。</p>
-<h6 id="消毒"><a href="#消毒" class="headerlink" title="消毒"></a>消毒</h6><p>有时候，不能确定某些输入是否安全，但是又不能拒绝，可以对输入进行消毒，去除掉那些坏的。</p>
-<h6 id="安全的数据处理"><a href="#安全的数据处理" class="headerlink" title="安全的数据处理"></a>安全的数据处理</h6><p>SQL 注入问题可以通过安全的数据处理方式来解决。还有命令行执行，都可以通过代码层面统一的实现来解决/</p>
-<h6 id="语义检测"><a href="#语义检测" class="headerlink" title="语义检测"></a>语义检测</h6><p>之前的措施都是为了防范格式错误的数据的影响，但是，有的恶意输入的格式并无问题。比如，银行转账请求，此时必须检测转账账户和登录用户的账户是否一致。</p>
-<h5 id="边界验证"><a href="#边界验证" class="headerlink" title="边界验证"></a>边界验证</h5><p>边界验证：应用的每个组件都对输入数据做验证。因为不同组件对安全的认知不同，甚至冲突。</p>
-<h5 id="多步骤验证和规范化"><a href="#多步骤验证和规范化" class="headerlink" title="多步骤验证和规范化"></a>多步骤验证和规范化</h5><p>encoding 和 decoding，消毒，字符集转换</p>
-<h4 id="处理攻击者"><a href="#处理攻击者" class="headerlink" title="处理攻击者"></a>处理攻击者</h4><h5 id="处理错误"><a href="#处理错误" class="headerlink" title="处理错误"></a>处理错误</h5><p>应用不应该向用户返回任何系统错误信息。攻击者可以从错误信息中获得敏感数据。</p>
-<h5 id="维护审计日志"><a href="#维护审计日志" class="headerlink" title="维护审计日志"></a>维护审计日志</h5><p>审计日志泄露，有助于攻击者发现问题。</p>
-<h5 id="提醒管理员"><a href="#提醒管理员" class="headerlink" title="提醒管理员"></a>提醒管理员</h5><h5 id="响应攻击"><a href="#响应攻击" class="headerlink" title="响应攻击"></a>响应攻击</h5><p>误导攻击者</p>
-<h4 id="管理应用"><a href="#管理应用" class="headerlink" title="管理应用"></a>管理应用</h4><ul>
-<li>认证机制的缺陷可能导致攻击者获得管理员权限</li>
-<li>管理员账户可以查看普通用户信息，跨站脚本攻击</li>
-<li>管理账户的功能测试不充分</li>
-</ul>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>所有的 Web 应用都有一套相同的核心安全机制。（逻辑层框架）</p>
-<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4><p>第一题</p>
-<p>为什么应用处理用户访问的机制的安全性遵从木桶原理？</p>
-<p>因为身份认证，会话管理，访问控制，任何一个有漏洞，都会导致用户越权访问。</p>
-<p>第二题</p>
-<p>会话和会话令牌的区别是什么？</p>
-<p>可以用字典做比喻，会话令牌就是 key，会话就是 value，value 的实际的内容，假如有了 key，就可以访问 value，key 是唯一的。</p>
-<p>第三题</p>
-<p>为什么不能全都用白名单？</p>
-<p>比如博客，上传代码，都得接受吧。</p>
-<p>第四题</p>
-<p>在没有管理员账号的情况下，为什么还要分析管理员功能？</p>
-<p>因为网站可能很傻逼，不用管理员账号也能使用管理员功能。</p>
-<p>第五题</p>
-<p>一个过滤跨站脚本的伪代码如下：</p>
-<ol>
-<li>去除 <script></li>
-<li>截断到 50 个字符</li>
-<li>删除引号</li>
-<li>URL 解码</li>
-<li>如果删除了，如果删除了字符，跳到步骤 1</li>
-</ol>
-<p>如何输入以下字符串？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;&gt;&lt;script&gt;alert(&quot;foo&quot;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>直接 URL encode ?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%22%3E%3Cscript%3Ealert%28%22foo%22%29%3C%2Fscript%3E</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/20/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%A0%B8%E5%BF%83%E9%98%B2%E5%BE%A1%E6%9C%BA%E5%88%B6/" data-id="ckbnsfujy0001r4fe8k9dhztb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1059,6 +1041,10 @@ filestore/../../../../../../../etc/passwd
       <ul>
         
           <li>
+            <a href="/2020/07/09/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E7%94%A8%E6%88%B7%EF%BC%9A%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC/">Web 应用黑客手册/第十二章：攻击用户：跨站脚本</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/01/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91/">Web 应用黑客手册/第十一章：攻击应用逻辑</a>
           </li>
         
@@ -1072,10 +1058,6 @@ filestore/../../../../../../../etc/passwd
         
           <li>
             <a href="/2020/06/26/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">Web 应用黑客手册/第八章：攻击访问控制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/26/Web%20%E5%BA%94%E7%94%A8%E9%BB%91%E5%AE%A2%E6%89%8B%E5%86%8C/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%94%BB%E5%87%BB%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86/">Web 应用黑客手册/第七章：攻击会话管理</a>
           </li>
         
       </ul>
