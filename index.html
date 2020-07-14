@@ -163,7 +163,56 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function setStatus(status)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    nonce &#x3D; ‘222230313740821’;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;wahh-network.com&#x2F;status&quot;&gt;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    setStatus(‘a’);</span><br><span class="line">    alert(nonce);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="再谈同源策略"><a href="#再谈同源策略" class="headerlink" title="再谈同源策略"></a>再谈同源策略</h4><h5 id="同源策略和浏览器插件"><a href="#同源策略和浏览器插件" class="headerlink" title="同源策略和浏览器插件"></a>同源策略和浏览器插件</h5>
+<h4 id="其他客户端注入攻击"><a href="#其他客户端注入攻击" class="headerlink" title="其他客户端注入攻击"></a>其他客户端注入攻击</h4><h5 id="HTTP-header-注入"><a href="#HTTP-header-注入" class="headerlink" title="HTTP  header 注入"></a>HTTP  header 注入</h5><p>HTTP 头注入发生在用户的输入以不安全的方式插入到 HTTP 响应报文头。如果攻击者可以注入换行字符，他就可以注入额外的 HTTP header 信息，也可以给 HTTP response body 中写入任意数据。</p>
+<p>举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;settings&#x2F;12&#x2F;Default.aspx?Language&#x3D;English HTTP&#x2F;1.1</span><br><span class="line">Host: mdsec.net</span><br><span class="line"></span><br><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Set-Cookie: PreferredLanguage&#x3D;English</span><br></pre></td></tr></table></figure>
+
+<p>这是正常的 request 和 response 报文头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;settings&#x2F;12&#x2F;Default.aspx?Language&#x3D;English%0d%0aFoo:+bar HTTP&#x2F;1.1</span><br><span class="line">Host: mdsec.net</span><br><span class="line"></span><br><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Set-Cookie: PreferredLanguage&#x3D;English</span><br><span class="line">Foo: bar</span><br></pre></td></tr></table></figure>
+
+<p>这是注入后的，通过给 language 参数注入了新的 header</p>
+<h6 id="利用-HTTP-头注入毒化-cache"><a href="#利用-HTTP-头注入毒化-cache" class="headerlink" title="利用 HTTP 头注入毒化 cache"></a>利用 HTTP 头注入毒化 cache</h6><p>连续发送 2 个 request，第一个请求 HTTP 头注入，注入信息是一个新的 HTTP response，server 返回第一个 response 的时候，代理认为 2 个 response 都已经返回，第二个 request 对应的文件 cache 被毒化</p>
+<h5 id="Cookie-注入"><a href="#Cookie-注入" class="headerlink" title="Cookie 注入"></a>Cookie 注入</h5><p>cookie 注入的方法：</p>
+<ul>
+<li>有的应用提供设置 cookie 的功能</li>
+<li>HTTP header 注入设置 cookie</li>
+<li>XSS 漏洞设置 cookie</li>
+<li>中间人攻击</li>
+</ul>
+<p>cookie 注入的利用：</p>
+<ul>
+<li>某些应用的逻辑问题，可以通过设置 cookie 来劫持会话令牌</li>
+<li>由于 cookie 一般受客户端代码信息，所以，可以借此进行 DOM-based XSS 或者 JavaScript 注入</li>
+</ul>
+<h5 id="开放重定位漏洞"><a href="#开放重定位漏洞" class="headerlink" title="开放重定位漏洞"></a>开放重定位漏洞</h5><p>应用使用用户提供的参数来拼接出新的 URL 用于重定向时，容易出现此漏洞。主要用于钓鱼。</p>
+<ol>
+<li>当 HTTP response 的返回码是 3xx 的时候，就是重定向</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Object moved</span><br><span class="line">Location: http:&#x2F;&#x2F;mdsec.net&#x2F;updates&#x2F;update29.html</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>HTTP Refresh header 也可以用于重定向</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Refresh: 0; url&#x3D;http:&#x2F;&#x2F;mdsec.net&#x2F;updates&#x2F;update29.html</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>HTTP &lt;meta&gt;  tag 可以用于重定向</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Length: 125</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;refresh&quot; content&#x3D;</span><br><span class="line">&quot;0;url&#x3D;http:&#x2F;&#x2F;mdsec.net&#x2F;updates&#x2F;update29.html&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>JavaScript 可用于重定向到任意网址</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Length: 120</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">document.location&#x3D;&quot;http:&#x2F;&#x2F;mdsec.net&#x2F;updates&#x2F;update29.html&quot;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 可以修改的包括：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">document.location</span><br><span class="line">document.URL</span><br><span class="line">document.open()</span><br><span class="line">window.location.href</span><br><span class="line">window.navigate()</span><br><span class="line">window.open()</span><br></pre></td></tr></table></figure>
+
+<h5 id="客户端-SQL-注入"><a href="#客户端-SQL-注入" class="headerlink" title="客户端 SQL 注入"></a>客户端 SQL 注入</h5><p>HTML5 支持客户端 SQL，同样可以被注入</p>
+<h5 id="客户端-HTTP-参数污染"><a href="#客户端-HTTP-参数污染" class="headerlink" title="客户端 HTTP 参数污染"></a>客户端 HTTP 参数污染</h5><p>同一个 key 对应多个 val</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;wahh-mail.com&#x2F;show?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1</span><br><span class="line">then</span><br><span class="line">&lt;a href&#x3D;&quot;doaction?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;message&#x3D;12&amp;action&#x3D;reply&amp;rnd&#x3D;1935612936174&quot;&gt;reply&lt;&#x2F;a&gt;</span><br><span class="line">but if</span><br><span class="line">https:&#x2F;&#x2F;wahh-mail.com&#x2F;show?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;action&#x3D;delete</span><br><span class="line">then</span><br><span class="line">&lt;a href&#x3D;&quot;doaction?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;action&#x3D;delete&amp;message&#x3D;12&amp;action&#x3D;reply&amp;rnd&#x3D;1935612936174&quot;&gt;reply&lt;&#x2F;a&gt;</span><br><span class="line">first action is delete</span><br></pre></td></tr></table></figure>
+
+<h4 id="本地隐私攻击"><a href="#本地隐私攻击" class="headerlink" title="本地隐私攻击"></a>本地隐私攻击</h4>
       
     </div>
     <footer class="article-footer">
