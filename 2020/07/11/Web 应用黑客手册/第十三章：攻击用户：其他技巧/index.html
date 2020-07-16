@@ -15,7 +15,7 @@
 <meta property="og:description" content="攻击用户：其他技巧诱导用户操作请求伪造OSRFOSRF: On-site request forgery 考虑如下代码： 12345&lt;tr&gt;  &lt;td&gt;&lt;img src&#x3D;&quot;&#x2F;images&#x2F;question.gif&quot;&gt;&lt;&#x2F;td&gt;  &lt;td&gt;daf&lt;&#x2F;td&gt;  &lt;td&gt;foo&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-11T03:48:55.625Z">
-<meta property="article:modified_time" content="2020-07-14T14:16:21.715Z">
+<meta property="article:modified_time" content="2020-07-16T14:40:19.100Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -214,7 +214,18 @@
 <h5 id="客户端-HTTP-参数污染"><a href="#客户端-HTTP-参数污染" class="headerlink" title="客户端 HTTP 参数污染"></a>客户端 HTTP 参数污染</h5><p>同一个 key 对应多个 val</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;wahh-mail.com&#x2F;show?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1</span><br><span class="line">then</span><br><span class="line">&lt;a href&#x3D;&quot;doaction?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;message&#x3D;12&amp;action&#x3D;reply&amp;rnd&#x3D;1935612936174&quot;&gt;reply&lt;&#x2F;a&gt;</span><br><span class="line">but if</span><br><span class="line">https:&#x2F;&#x2F;wahh-mail.com&#x2F;show?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;action&#x3D;delete</span><br><span class="line">then</span><br><span class="line">&lt;a href&#x3D;&quot;doaction?folder&#x3D;inbox&amp;order&#x3D;down&amp;size&#x3D;20&amp;start&#x3D;1&amp;action&#x3D;delete&amp;message&#x3D;12&amp;action&#x3D;reply&amp;rnd&#x3D;1935612936174&quot;&gt;reply&lt;&#x2F;a&gt;</span><br><span class="line">first action is delete</span><br></pre></td></tr></table></figure>
 
-<h4 id="本地隐私攻击"><a href="#本地隐私攻击" class="headerlink" title="本地隐私攻击"></a>本地隐私攻击</h4>
+<h4 id="本地隐私攻击"><a href="#本地隐私攻击" class="headerlink" title="本地隐私攻击"></a>本地隐私攻击</h4><h5 id="持久-cookie"><a href="#持久-cookie" class="headerlink" title="持久 cookie"></a>持久 cookie</h5><p>有些应用会设置有效期很长的 cookie</p>
+<h5 id="web-内容缓存"><a href="#web-内容缓存" class="headerlink" title="web 内容缓存"></a>web 内容缓存</h5><p>搜索一下</p>
+<h5 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h5><p>输入内容会自动补全，比如搜索记录</p>
+<h4 id="攻击-ActiveX"><a href="#攻击-ActiveX" class="headerlink" title="攻击 ActiveX"></a>攻击 ActiveX</h4><p>这玩意已经在历史的垃圾堆了，edge 都不支持了</p>
+<h4 id="攻击浏览器"><a href="#攻击浏览器" class="headerlink" title="攻击浏览器"></a>攻击浏览器</h4><ul>
+<li>记录键盘敲击记录</li>
+<li>获取浏览记录和查询词条</li>
+<li>枚举当前使用的应用</li>
+<li>端口扫描</li>
+<li>攻击其他网站</li>
+</ul>
+<h4 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h4>
       
     </div>
     <footer class="article-footer">
